@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <lable>Id:</lable>
+        <input placeholder="id" type="number" id="id"/><br/>
+        <lable>Email:</lable>
+        <input placeholder="email" type="text" id="email"/><br/>
+        <button id="submit">Submit</button>
+    </div>
+    <script>
+       
+       const sub = document.getElementById("submit");
+       sub.addEventListener('click' , login);
+
+       function login(){
+           fetch('https://reqres.in/api/users?page=2')
+           .then((res) => res.json())
+           .then((res) => {
+                checkLogin(res.data)
+           })
+
+           function checkLogin(data){
+            const id = document.getElementById("id").value;
+            const email = document.getElementById("email").value;
+
+            if( !id || !email){
+                alert('fill detalis');
+                return;
+            }
+            var count = 0;
+            for(let user of data){
+                if(user.id == id && user.email == email){
+                  count++; 
+                  
+                   return
+                }
+            }
+            if( count == 0){
+                alert('id and email is not correct');
+            }
+            
+           }
+       }
+    </script>
+</body>
+</html>
